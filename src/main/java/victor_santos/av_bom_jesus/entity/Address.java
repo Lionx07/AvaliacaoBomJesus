@@ -10,6 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
+@Builder
 @Table(name = "tb_address")
 public class Address implements Serializable {
     private static final long serialVersionUID = 1L;

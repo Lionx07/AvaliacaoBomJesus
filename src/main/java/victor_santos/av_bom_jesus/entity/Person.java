@@ -60,4 +60,10 @@ public abstract class Person implements Serializable {
         this.addresses.addAll(addresses);
         addresses.forEach(address -> address.setPerson(this));
     }
+
+    public boolean isEmpty() {
+        return
+            (name == null || name.isBlank()) &&
+            (emailAddress == null || emailAddress.isBlank());
+    }
 }

@@ -8,6 +8,8 @@ import victor_santos.av_bom_jesus.entity.Professor;
 import victor_santos.av_bom_jesus.entity.Student;
 import victor_santos.av_bom_jesus.enums.Status;
 import victor_santos.av_bom_jesus.repository.PersonRepository;
+import victor_santos.av_bom_jesus.service.exception.BadRequestException;
+import victor_santos.av_bom_jesus.service.exception.NotFoundException;
 
 import java.util.List;
 
@@ -22,13 +24,13 @@ public class PersonService {
     }
 
     public Person getPersonById(Long id) {
-        return personRepository.findById(id).orElseThrow(() -> new RuntimeException("Person not found"));
+        return personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person not found"));
     }
 
     @Transactional
     public Person addPerson(Person obj) {
-        if (obj == null)
-            throw new IllegalArgumentException("Object cannot be null");
+        if (obj == null || obj.isEmpty())
+            throw new BadRequestException("Object cannot be null");
 
         return personRepository.save(obj);
     }
@@ -36,14 +38,14 @@ public class PersonService {
     @Transactional
     public void deletePerson(Long id) {
         if (!personRepository.existsById(id))
-            throw new RuntimeException("Person not found");
+            throw new NotFoundException("Person not found");
 
         personRepository.deleteById(id);
     }
 
     @Transactional
     public void softDeletePerson(Long id) {
-        Person existPerson = personRepository.findById(id).orElseThrow(() -> new RuntimeException("Person not found"));
+        Person existPerson = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person not found"));
         existPerson.setStatus(Status.DISABLE);
 
         personRepository.save(existPerson);
@@ -52,7 +54,7 @@ public class PersonService {
     @Transactional
     public Person updatePerson(Long id, Person person) {
         if (person == null)
-            throw new IllegalArgumentException("Person cannot be null");
+            throw new BadRequestException("Person cannot be null");
 
         return personRepository.findById(id).map(personToUpdate -> {
             if (personToUpdate instanceof Professor && person instanceof Professor) {
@@ -62,7 +64,7 @@ public class PersonService {
                 updateStudent((Student)personToUpdate, (Student) person);
             }
             return personRepository.save(personToUpdate);
-        }).orElseThrow(() -> new RuntimeException("Person not found"));
+        }).orElseThrow(() -> new NotFoundException("Person not found"));
     }
 
     private void updatePersonData(Person personToUpdate, Person person) {
