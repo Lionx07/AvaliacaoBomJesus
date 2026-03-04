@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import victor_santos.av_bom_jesus.entity.Person;
 import victor_santos.av_bom_jesus.entity.Professor;
 import victor_santos.av_bom_jesus.entity.Student;
-import victor_santos.av_bom_jesus.entity.enums.Status;
+import victor_santos.av_bom_jesus.enums.Status;
 import victor_santos.av_bom_jesus.repository.PersonRepository;
 
 import java.util.List;
@@ -23,8 +23,8 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public Optional<Person> getPersonById(UUID id) {
-        return Optional.of(personRepository.findById(id).orElseThrow(() -> new RuntimeException("Person not found")));
+    public Person getPersonById(UUID id) {
+        return personRepository.findById(id).orElseThrow(() -> new RuntimeException("Person not found"));
     }
 
     @Transactional

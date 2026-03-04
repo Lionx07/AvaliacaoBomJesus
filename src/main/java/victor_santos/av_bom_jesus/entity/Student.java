@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import victor_santos.av_bom_jesus.entity.enums.Status;
+import victor_santos.av_bom_jesus.enums.Status;
 
 import java.util.List;
 

@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import victor_santos.av_bom_jesus.entity.enums.Status;
+import victor_santos.av_bom_jesus.enums.Status;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,7 +23,8 @@ public abstract class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -40,10 +40,9 @@ public abstract class Person implements Serializable {
     private Status status;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
 
     protected Person(String name, String phoneNumber, String emailAddress, Status status, List<Address> addresses) {
-        this.id = UUID.randomUUID();
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
@@ -55,10 +54,10 @@ public abstract class Person implements Serializable {
     }
 
     public void addAddresses(List<Address> addresses) {
+        if (this.addresses == null) {
+            this.addresses = new ArrayList<>();
+        }
         this.addresses.addAll(addresses);
-
-        addresses.forEach(address -> {
-            address.setPerson(this);
-        });
+        addresses.forEach(address -> address.setPerson(this));
     }
 }
