@@ -10,8 +10,6 @@ import victor_santos.av_bom_jesus.enums.Status;
 import victor_santos.av_bom_jesus.repository.PersonRepository;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PersonService {
@@ -23,7 +21,7 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public Person getPersonById(UUID id) {
+    public Person getPersonById(Long id) {
         return personRepository.findById(id).orElseThrow(() -> new RuntimeException("Person not found"));
     }
 
@@ -36,7 +34,7 @@ public class PersonService {
     }
 
     @Transactional
-    public void deletePerson(UUID id) {
+    public void deletePerson(Long id) {
         if (!personRepository.existsById(id))
             throw new RuntimeException("Person not found");
 
@@ -44,7 +42,7 @@ public class PersonService {
     }
 
     @Transactional
-    public void softDeletePerson(UUID id) {
+    public void softDeletePerson(Long id) {
         Person existPerson = personRepository.findById(id).orElseThrow(() -> new RuntimeException("Person not found"));
         existPerson.setStatus(Status.DISABLE);
 
@@ -52,7 +50,7 @@ public class PersonService {
     }
 
     @Transactional
-    public Person updatePerson(UUID id, Person person) {
+    public Person updatePerson(Long id, Person person) {
         if (person == null)
             throw new IllegalArgumentException("Person cannot be null");
 
