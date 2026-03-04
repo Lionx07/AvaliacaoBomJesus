@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import victor_santos.av_bom_jesus.dto.request.PersonDTORequest;
 import victor_santos.av_bom_jesus.dto.response.PersonDTOResponse;
-import victor_santos.av_bom_jesus.entity.Person;
 import victor_santos.av_bom_jesus.mapper.PersonMapper;
 import victor_santos.av_bom_jesus.service.PersonService;
 

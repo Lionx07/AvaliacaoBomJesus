@@ -7,8 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import victor_santos.av_bom_jesus.entity.Address;
-import victor_santos.av_bom_jesus.entity.Person;
 import victor_santos.av_bom_jesus.entity.Professor;
 import victor_santos.av_bom_jesus.entity.Student;
 import victor_santos.av_bom_jesus.enums.Status;
