@@ -1,0 +1,64 @@
+package victor_santos.av_bom_jesus.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+import victor_santos.av_bom_jesus.entity.enums.Status;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(of = "id")
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "person_type")
+@Table(name = "tb_person")
+public abstract class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    private UUID id;
+
+    @NotBlank(message = "Name is required")
+    private String name;
+
+    private String phoneNumber;
+
+    @Email(message = "E-mail invalid")
+    @NotBlank(message = "E-mail is required")
+    @Column(unique = true)
+    private String emailAddress;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses;
+
+    protected Person(String name, String phoneNumber, String emailAddress, Status status, List<Address> addresses) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.status = status;
+
+        if (addresses != null) {
+            addAddresses(addresses);
+        }
+    }
+
+    public void addAddresses(List<Address> addresses) {
+        this.addresses.addAll(addresses);
+
+        addresses.forEach(address -> {
+            address.setPerson(this);
+        });
+    }
+}
