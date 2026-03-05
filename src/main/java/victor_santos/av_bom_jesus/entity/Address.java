@@ -1,5 +1,6 @@
 package victor_santos.av_bom_jesus.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
@@ -25,6 +26,7 @@ public class Address implements Serializable {
     private String zipCode;
     private String country;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;

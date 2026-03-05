@@ -1,5 +1,8 @@
 package victor_santos.av_bom_jesus.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
@@ -18,6 +21,11 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "person_type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "person_type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Professor.class, name = "PROFESSOR"),
+    @JsonSubTypes.Type(value = Student.class, name = "STUDENT")
+})
 @Table(name = "tb_person")
 public abstract class Person implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -39,6 +47,7 @@ public abstract class Person implements Serializable {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
 

@@ -7,6 +7,7 @@ import victor_santos.av_bom_jesus.dto.request.PersonDTORequest;
 import victor_santos.av_bom_jesus.dto.response.PersonDTOResponse;
 import victor_santos.av_bom_jesus.dto.response.ProfessorDTOResponse;
 import victor_santos.av_bom_jesus.dto.response.StudentDTOResponse;
+import victor_santos.av_bom_jesus.entity.Professor;
 import victor_santos.av_bom_jesus.mapper.PersonMapper;
 import victor_santos.av_bom_jesus.service.PersonService;
 
@@ -36,10 +37,10 @@ public class PersonController {
     }
 
     @GetMapping("/professor")
-    public ResponseEntity<List<ProfessorDTOResponse>> getAllProfessors() {
+    public ResponseEntity<List<Professor>> getAllProfessors() {
         var data = service.getProfessors();
 
-        return ResponseEntity.ok(mapper.toResponseList(data, mapper::toDtoResponse));
+        return ResponseEntity.ok(data);
     }
 
     @GetMapping("/{id}")
