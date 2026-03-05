@@ -29,20 +29,18 @@ public interface PersonMapper {
 
         if (person instanceof Student) return toDtoResponse((Student) person);
         if (person instanceof Professor) return toDtoResponse((Professor) person);
+
         return null;
     }
 
     // --- Response List Map ---
-    default List<PersonDTOResponse> toResponseList(List<Person> persons) {
-        if (persons == null) return null;
+    default <T, R> List<R> toResponseList(List<T> data, java.util.function.Function<T, R> mapper) {
+        if (data == null || data.isEmpty()) return List.of();
 
-        return persons.stream()
-                .map(person -> {
-                    if (person instanceof Student) return toDtoResponse((Student) person);
-                    if (person instanceof Professor) return toDtoResponse((Professor) person);
-                    return null;
-                })
-                .collect(Collectors.toList());
+        return data.stream()
+                .map(mapper)
+                .filter(java.util.Objects::nonNull)
+                .toList();
     }
 
     // --- Request Map ---

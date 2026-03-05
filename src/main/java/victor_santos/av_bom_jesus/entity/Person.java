@@ -1,8 +1,8 @@
 package victor_santos.av_bom_jesus.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import victor_santos.av_bom_jesus.enums.Status;
 

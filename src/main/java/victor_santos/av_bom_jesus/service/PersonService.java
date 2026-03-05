@@ -8,6 +8,8 @@ import victor_santos.av_bom_jesus.entity.Professor;
 import victor_santos.av_bom_jesus.entity.Student;
 import victor_santos.av_bom_jesus.enums.Status;
 import victor_santos.av_bom_jesus.repository.PersonRepository;
+import victor_santos.av_bom_jesus.repository.ProfessorRepository;
+import victor_santos.av_bom_jesus.repository.StudentRepository;
 import victor_santos.av_bom_jesus.service.exception.BadRequestException;
 import victor_santos.av_bom_jesus.service.exception.NotFoundException;
 
@@ -19,8 +21,22 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private ProfessorRepository professorRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
     public List<Person> getPersons() {
         return personRepository.findAll();
+    }
+
+    public List<Student> getStudents() {
+        return studentRepository.findAll();
+    }
+
+    public List<Professor> getProfessors() {
+        return professorRepository.findAll();
     }
 
     public Person getPersonById(Long id) {

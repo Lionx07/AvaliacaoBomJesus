@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import victor_santos.av_bom_jesus.dto.request.PersonDTORequest;
 import victor_santos.av_bom_jesus.dto.response.PersonDTOResponse;
+import victor_santos.av_bom_jesus.dto.response.ProfessorDTOResponse;
+import victor_santos.av_bom_jesus.dto.response.StudentDTOResponse;
 import victor_santos.av_bom_jesus.mapper.PersonMapper;
 import victor_santos.av_bom_jesus.service.PersonService;
 
@@ -16,13 +18,28 @@ public class PersonController {
 
     @Autowired
     private PersonService service;
+    @Autowired
     private PersonMapper mapper;
 
     @GetMapping
     public ResponseEntity<List<PersonDTOResponse>> getAll() {
         var data = service.getPersons();
 
-        return ResponseEntity.ok(mapper.toResponseList(data));
+        return ResponseEntity.ok(mapper.toResponseList(data, mapper::toDtoResponse));
+    }
+
+    @GetMapping("/student")
+    public ResponseEntity<List<StudentDTOResponse>> getAllStudents() {
+        var data = service.getStudents();
+
+        return ResponseEntity.ok(mapper.toResponseList(data, mapper::toDtoResponse));
+    }
+
+    @GetMapping("/professor")
+    public ResponseEntity<List<ProfessorDTOResponse>> getAllProfessors() {
+        var data = service.getProfessors();
+
+        return ResponseEntity.ok(mapper.toResponseList(data, mapper::toDtoResponse));
     }
 
     @GetMapping("/{id}")
