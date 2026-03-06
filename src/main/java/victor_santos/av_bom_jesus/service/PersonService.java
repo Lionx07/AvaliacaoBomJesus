@@ -16,6 +16,7 @@ import victor_santos.av_bom_jesus.service.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -34,11 +35,15 @@ public class PersonService {
     }
 
     public List<Student> getStudents() {
-        return studentRepository.findAll();
+        return studentRepository.findAll().stream()
+            .filter(p -> p.getStatus().equals(Status.ACTIVE))
+            .collect(Collectors.toList());
     }
 
     public List<Professor> getProfessors() {
-        return professorRepository.findAll();
+        return professorRepository.findAll().stream()
+            .filter(p -> p.getStatus().equals(Status.ACTIVE))
+            .collect(Collectors.toList());
     }
 
     public Person getPersonById(Long id) {

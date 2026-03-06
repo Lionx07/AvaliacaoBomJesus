@@ -15,11 +15,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "person_type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Professor.class, name = "PROFESSOR"),
-    @JsonSubTypes.Type(value = Student.class, name = "STUDENT")
-})
 @DiscriminatorValue("Student")
 public class Student extends Person {
 

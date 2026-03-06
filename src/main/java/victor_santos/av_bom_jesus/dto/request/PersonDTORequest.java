@@ -16,7 +16,8 @@ import java.util.List;
     property = "type"
 )
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = ProfessorDTORequest.class, name = "professor")
+    @JsonSubTypes.Type(value = ProfessorDTORequest.class, name = "professor"),
+    @JsonSubTypes.Type(value = StudentDTORequest.class, name = "student")
 })
 public abstract class PersonDTORequest {
     private String name;
