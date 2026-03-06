@@ -59,7 +59,8 @@ public class PersonController {
         var data = mapper.toEntity(body);
         var response = service.addPerson(data);
 
-        return ResponseEntity.ok(mapper.toDtoResponse(response));
+        var dto = ResponseEntity.ok(mapper.toDtoResponse(response));
+        return dto;
     }
 
     @PutMapping("/{id}")

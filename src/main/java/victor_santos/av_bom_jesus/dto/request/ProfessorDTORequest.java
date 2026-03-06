@@ -1,10 +1,10 @@
 package victor_santos.av_bom_jesus.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProfessorDTORequest extends PersonDTORequest {
     private Double salary;
 }

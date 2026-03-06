@@ -1,10 +1,10 @@
 package victor_santos.av_bom_jesus.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddressDTOResponse {
     private Long id;
     private String street;

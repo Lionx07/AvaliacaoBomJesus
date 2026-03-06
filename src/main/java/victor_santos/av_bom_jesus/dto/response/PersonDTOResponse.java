@@ -1,13 +1,13 @@
 package victor_santos.av_bom_jesus.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import victor_santos.av_bom_jesus.enums.Status;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class PersonDTOResponse {
     private Long id;
     private String name;
