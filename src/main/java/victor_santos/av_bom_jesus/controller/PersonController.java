@@ -1,14 +1,20 @@
 package victor_santos.av_bom_jesus.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import victor_santos.av_bom_jesus.dto.request.PersonDTORequest;
+import victor_santos.av_bom_jesus.dto.request.StudentDTORequest;
 import victor_santos.av_bom_jesus.dto.response.PersonDTOResponse;
 import victor_santos.av_bom_jesus.dto.response.ProfessorDTOResponse;
 import victor_santos.av_bom_jesus.dto.response.StudentDTOResponse;
 import victor_santos.av_bom_jesus.entity.Professor;
 import victor_santos.av_bom_jesus.mapper.PersonMapper;
+import victor_santos.av_bom_jesus.service.ImgBBService;
 import victor_santos.av_bom_jesus.service.PersonService;
 
 import java.util.List;
@@ -21,6 +27,8 @@ public class PersonController {
     private PersonService service;
     @Autowired
     private PersonMapper mapper;
+    @Autowired
+    private ImgBBService imgBBService;
 
     @GetMapping
     public ResponseEntity<List<PersonDTOResponse>> getAll() {
@@ -52,14 +60,25 @@ public class PersonController {
         return ResponseEntity.ok(mapper.toDtoResponse(data));
     }
 
-    @PostMapping
+    @PostMapping(value = "", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<PersonDTOResponse> addPerson(
-        @RequestBody PersonDTORequest body
-    ) {
-        var data = mapper.toEntity(body);
-        var response = service.addPerson(data);
+        @RequestPart("person") String personJson,
+        @RequestPart(value = "file", required = false) MultipartFile file
+    ) throws JsonProcessingException {
+        var objectMapper = new ObjectMapper();
+        var dto = objectMapper.readValue(personJson, PersonDTORequest.class);
 
-        return ResponseEntity.ok(mapper.toDtoResponse(response));
+        if (dto instanceof StudentDTORequest student){
+            if (file != null && !file.isEmpty()) {
+                String url = imgBBService.uploadImage(file);
+                student.setPhoto(url);
+            }
+        }
+
+        var entity = mapper.toEntity(dto);
+        var savedEntity = service.addPerson(entity);
+
+        return ResponseEntity.ok(mapper.toDtoResponse(savedEntity));
     }
 
     @PutMapping("/{id}")
