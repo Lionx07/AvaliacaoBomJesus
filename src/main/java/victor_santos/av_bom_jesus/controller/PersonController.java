@@ -37,10 +37,10 @@ public class PersonController {
     }
 
     @GetMapping("/professor")
-    public ResponseEntity<List<Professor>> getAllProfessors() {
+    public ResponseEntity<List<ProfessorDTOResponse>> getAllProfessors() {
         var data = service.getProfessors();
 
-        return ResponseEntity.ok(data);
+        return ResponseEntity.ok(mapper.toResponseList(data, mapper::toDtoResponse));
     }
 
     @GetMapping("/{id}")

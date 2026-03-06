@@ -3,6 +3,7 @@ package victor_santos.av_bom_jesus.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import victor_santos.av_bom_jesus.entity.Address;
 import victor_santos.av_bom_jesus.entity.Person;
 import victor_santos.av_bom_jesus.entity.Professor;
 import victor_santos.av_bom_jesus.entity.Student;
@@ -13,6 +14,7 @@ import victor_santos.av_bom_jesus.repository.StudentRepository;
 import victor_santos.av_bom_jesus.service.exception.BadRequestException;
 import victor_santos.av_bom_jesus.service.exception.NotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,10 +45,21 @@ public class PersonService {
         return personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person not found"));
     }
 
-    @Transactional
     public Person addPerson(Person obj) {
-        if (obj == null || obj.isEmpty())
+        if (obj == null)
             throw new BadRequestException("Object cannot be null");
+
+        if (obj.getAddresses() != null) {
+            List<Address> incomingAddresses = new ArrayList<>(obj.getAddresses());
+
+            obj.getAddresses().clear();
+
+            for (Address addr : incomingAddresses) {
+                addr.setId(null);
+                addr.setPerson(obj);
+                obj.getAddresses().add(addr);
+            }
+        }
 
         return personRepository.save(obj);
     }

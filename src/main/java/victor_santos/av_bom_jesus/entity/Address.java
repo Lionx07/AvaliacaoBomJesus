@@ -3,22 +3,21 @@ package victor_santos.av_bom_jesus.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-import java.io.Serializable;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Entity
 @Builder
+@Entity
 @Table(name = "tb_address")
-public class Address implements Serializable {
-    private static final long serialVersionUID = 1L;
+@ToString(exclude = "person")
+@EqualsAndHashCode(of = "id")
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String street;
     private String city;
