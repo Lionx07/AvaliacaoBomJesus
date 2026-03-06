@@ -28,6 +28,33 @@ spring.servlet.multipart.max-request-size=5MB
 imgbb.api.key=9b9802b732feb71a46bfc58aec6ddcc3
 ```
 
+Scrip para inserção no H2 Db
+```
+INSERT INTO tb_person (person_type, name, phone_number, email_address, status)
+VALUES ('Student', 'João Silva', '41999990000', 'joao@email.com', 'ACTIVE');
+
+INSERT INTO tb_person (person_type, name, phone_number, email_address, status)
+VALUES ('Student', 'Maria Souza', '41988880000', 'maria@email.com', 'ACTIVE');
+
+INSERT INTO tb_person (person_type, name, phone_number, email_address, status)
+VALUES ('Professor', 'Carlos Mendes', '41977770000', 'carlos@email.com', 'ACTIVE');
+
+INSERT INTO tb_person (person_type, name, phone_number, email_address, status)
+VALUES ('Professor', 'Ana Pereira', '41966660000', 'ana@email.com', 'ACTIVE');
+
+INSERT INTO tb_address (street, city, state, zip_code, country, person_id)
+VALUES ('Rua A', 'Curitiba', 'PR', '80000000', 'Brasil', 1);
+
+INSERT INTO tb_address (street, city, state, zip_code, country, person_id)
+VALUES ('Rua B', 'Curitiba', 'PR', '80000001', 'Brasil', 2);
+
+INSERT INTO tb_address (street, city, state, zip_code, country, person_id)
+VALUES ('Rua C', 'Curitiba', 'PR', '80000002', 'Brasil', 3);
+
+INSERT INTO tb_address (street, city, state, zip_code, country, person_id)
+VALUES ('Rua D', 'Curitiba', 'PR', '80000003', 'Brasil', 4);
+```
+
 # Endpoints
 
 Porta padrão
