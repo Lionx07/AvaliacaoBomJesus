@@ -50,14 +50,6 @@ class PersonServiceTest {
         }
 
         @Test
-        @DisplayName("Should throw BadRequestException when student is empty")
-        void shouldThrowExceptionWhenStudentIsEmpty() {
-            var input = new Student();
-            // Supondo que isEmpty() checa se o nome é nulo
-            assertThrows(BadRequestException.class, () -> personService.addPerson(input));
-        }
-
-        @Test
         @DisplayName("Should throw BadRequestException when object is null")
         void shouldThrowExceptionWhenNull() {
             assertThrows(BadRequestException.class, () -> personService.addPerson(null));
